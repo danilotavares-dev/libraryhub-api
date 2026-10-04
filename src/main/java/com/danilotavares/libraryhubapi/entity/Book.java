@@ -7,7 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.time.Year;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -28,13 +29,21 @@ public class Book {
     private String isbn;
 
     @Column(nullable = false)
-    private Year publicationYear;
+    private Integer publicationYear;
 
     @Column(nullable = false)
     private int quantity;
 
     @Column(nullable = false)
     private int availableQuantity;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "book_authors",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id")
+    )
+    private Set<Author> authors = new HashSet<>();
 
     private LocalDateTime createdAt;
 }
