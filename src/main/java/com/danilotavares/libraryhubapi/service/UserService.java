@@ -1,6 +1,6 @@
 package com.danilotavares.libraryhubapi.service;
 
-import com.danilotavares.libraryhubapi.dto.RegisterRequestDTO;
+import com.danilotavares.libraryhubapi.dto.UserDTO;
 import com.danilotavares.libraryhubapi.entity.User;
 import com.danilotavares.libraryhubapi.entity.UserRole;
 import com.danilotavares.libraryhubapi.exception.EmailAlreadyExistsException;
@@ -12,16 +12,16 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
-public class AuthService {
+public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
-    public void register(RegisterRequestDTO requestDTO) {
+    public void register(UserDTO requestDTO) {
          Optional<User> existingUser = userRepository.findByEmail(requestDTO.email());
 
          if (existingUser.isPresent()) {
